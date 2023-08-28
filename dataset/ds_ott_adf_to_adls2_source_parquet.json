@@ -1,0 +1,61 @@
+{
+	"name": "ds_ott_adf_to_adls2_source_parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ott_adf_to_adls2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ottProject"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "TransformedData",
+				"fileSystem": "ott-project-output"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Title",
+				"type": "UTF8"
+			},
+			{
+				"name": "Genre",
+				"type": "UTF8"
+			},
+			{
+				"name": "ReleaseDate",
+				"type": "UTF8"
+			},
+			{
+				"name": "IMDB_Score",
+				"type": "UTF8"
+			},
+			{
+				"name": "Language",
+				"type": "UTF8"
+			},
+			{
+				"name": "Views",
+				"type": "UTF8"
+			},
+			{
+				"name": "AddedDate",
+				"type": "UTF8"
+			},
+			{
+				"name": "RuntimeInHours",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "RuntimeCategory",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

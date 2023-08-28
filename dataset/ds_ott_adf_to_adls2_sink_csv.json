@@ -1,0 +1,42 @@
+{
+	"name": "ds_ott_adf_to_adls2_sink_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ott_adf_to_adls2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"FileName": {
+				"type": "string"
+			},
+			"FolderName": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "ottProject"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().FileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "IngestData/@{substring(dataset().FileName,0,10)}",
+					"type": "Expression"
+				},
+				"fileSystem": "ott-project-input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

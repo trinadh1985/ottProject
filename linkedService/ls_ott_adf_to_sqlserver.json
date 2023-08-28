@@ -1,0 +1,19 @@
+{
+	"name": "ls_ott_adf_to_sqlserver",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=ottdata;User ID=sqladmin",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_ott_adf_access_to_keyvault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "azure-sqlserver-pwd"
+			}
+		}
+	}
+}

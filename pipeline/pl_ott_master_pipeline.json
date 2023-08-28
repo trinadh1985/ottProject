@@ -1,0 +1,66 @@
+{
+	"name": "pl_ott_master_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Ingest Ott Data",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_ott_onprem_to_adls2_ingest",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Transform Data",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Ingest Ott Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_ott_adls2_to_synapse_transform_adls2",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Load Data to SqlServer",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Transform Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_ott_load_transformed_to_sqlserver",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "ottProject"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-08-22T20:45:08Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

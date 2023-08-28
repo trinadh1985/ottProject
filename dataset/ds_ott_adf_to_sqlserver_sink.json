@@ -1,0 +1,20 @@
+{
+	"name": "ds_ott_adf_to_sqlserver_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ott_adf_to_sqlserver",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ottProject"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "ottdata",
+			"table": "ott_transformed_data"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

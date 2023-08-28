@@ -1,0 +1,25 @@
+{
+	"name": "ds_ott_adf_to_onprem_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_ott_adf_to_onprem",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ottProject"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

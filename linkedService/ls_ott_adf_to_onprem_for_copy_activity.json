@@ -1,0 +1,24 @@
+{
+	"name": "ls_ott_adf_to_onprem_for_copy_activity",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\Users\\3nadh\\Desktop\\Azure\\Azure End to End Projects\\Project3_OTT_Project\\Host",
+			"userId": "3nadh",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "ls_ott_adf_access_to_keyvault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "ott-onprem-vm-password"
+			}
+		},
+		"connectVia": {
+			"referenceName": "ott-self-IR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

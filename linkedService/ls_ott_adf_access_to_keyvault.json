@@ -1,0 +1,11 @@
+{
+	"name": "ls_ott_adf_access_to_keyvault",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://ott-kv-developmemt.vault.azure.net/"
+		}
+	}
+}
