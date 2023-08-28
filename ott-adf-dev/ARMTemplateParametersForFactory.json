@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ott-adf-dev"
+		},
+		"ls_ott_adf_to_adls2_accountKey": {
+			"value": ""
+		},
+		"ls_ott_adf_to_adls2_for_copy_activity_accountKey": {
+			"value": ""
+		},
+		"ls_ott_adf_to_sqlserver_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=ottdata;User ID=sqladmin"
+		},
+		"ls_ott_adf_access_to_keyvault_properties_typeProperties_baseUrl": {
+			"value": "https://ott-kv-developmemt.vault.azure.net/"
+		},
+		"ls_ott_adf_to_adls2_properties_typeProperties_url": {
+			"value": "https://ottstoragedevenv.dfs.core.windows.net/"
+		},
+		"ls_ott_adf_to_adls2_for_copy_activity_properties_typeProperties_url": {
+			"value": "https://ottstoragedev.dfs.core.windows.net/"
+		},
+		"ls_ott_adf_to_connect_synapse_properties_typeProperties_endpoint": {
+			"value": "https://ott-synapse-dev.dev.azuresynapse.net"
+		},
+		"ls_ott_adf_to_onprem_properties_typeProperties_host": {
+			"value": "C:\\Users\\3nadh\\Desktop\\Azure\\Azure End to End Projects\\Project3_OTT_Project\\OTTData"
+		},
+		"ls_ott_adf_to_onprem_properties_typeProperties_userId": {
+			"value": "3nadh"
+		},
+		"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host": {
+			"value": "C:\\Users\\3nadh\\Desktop\\Azure\\Azure End to End Projects\\Project3_OTT_Project\\Host"
+		},
+		"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId": {
+			"value": "3nadh"
+		},
+		"ls_ott_adf_to_synapse_for_spark_notebook_properties_typeProperties_endpoint": {
+			"value": "https://ott-synapse-dev.dev.azuresynapse.net"
+		}
+	}
+}

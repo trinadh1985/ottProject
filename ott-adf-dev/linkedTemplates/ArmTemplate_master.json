@@ -1,0 +1,127 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ott-adf-dev"
+		},
+		"ls_ott_adf_to_adls2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_ott_adf_to_adls2'"
+		},
+		"ls_ott_adf_to_adls2_for_copy_activity_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_ott_adf_to_adls2_for_copy_activity'"
+		},
+		"ls_ott_adf_to_sqlserver_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_ott_adf_to_sqlserver'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=ottdata;User ID=sqladmin"
+		},
+		"ls_ott_adf_access_to_keyvault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://ott-kv-developmemt.vault.azure.net/"
+		},
+		"ls_ott_adf_to_adls2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ottstoragedevenv.dfs.core.windows.net/"
+		},
+		"ls_ott_adf_to_adls2_for_copy_activity_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ottstoragedev.dfs.core.windows.net/"
+		},
+		"ls_ott_adf_to_connect_synapse_properties_typeProperties_endpoint": {
+			"type": "string",
+			"defaultValue": "https://ott-synapse-dev.dev.azuresynapse.net"
+		},
+		"ls_ott_adf_to_onprem_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\Users\\3nadh\\Desktop\\Azure\\Azure End to End Projects\\Project3_OTT_Project\\OTTData"
+		},
+		"ls_ott_adf_to_onprem_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "3nadh"
+		},
+		"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\Users\\3nadh\\Desktop\\Azure\\Azure End to End Projects\\Project3_OTT_Project\\Host"
+		},
+		"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "3nadh"
+		},
+		"ls_ott_adf_to_synapse_for_spark_notebook_properties_typeProperties_endpoint": {
+			"type": "string",
+			"defaultValue": "https://ott-synapse-dev.dev.azuresynapse.net"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ott-adf-dev_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ls_ott_adf_to_adls2_accountKey": {
+						"value": "[parameters('ls_ott_adf_to_adls2_accountKey')]"
+					},
+					"ls_ott_adf_to_adls2_for_copy_activity_accountKey": {
+						"value": "[parameters('ls_ott_adf_to_adls2_for_copy_activity_accountKey')]"
+					},
+					"ls_ott_adf_to_sqlserver_connectionString": {
+						"value": "[parameters('ls_ott_adf_to_sqlserver_connectionString')]"
+					},
+					"ls_ott_adf_access_to_keyvault_properties_typeProperties_baseUrl": {
+						"value": "[parameters('ls_ott_adf_access_to_keyvault_properties_typeProperties_baseUrl')]"
+					},
+					"ls_ott_adf_to_adls2_properties_typeProperties_url": {
+						"value": "[parameters('ls_ott_adf_to_adls2_properties_typeProperties_url')]"
+					},
+					"ls_ott_adf_to_adls2_for_copy_activity_properties_typeProperties_url": {
+						"value": "[parameters('ls_ott_adf_to_adls2_for_copy_activity_properties_typeProperties_url')]"
+					},
+					"ls_ott_adf_to_connect_synapse_properties_typeProperties_endpoint": {
+						"value": "[parameters('ls_ott_adf_to_connect_synapse_properties_typeProperties_endpoint')]"
+					},
+					"ls_ott_adf_to_synapse_for_spark_notebook_properties_typeProperties_endpoint": {
+						"value": "[parameters('ls_ott_adf_to_synapse_for_spark_notebook_properties_typeProperties_endpoint')]"
+					},
+					"ls_ott_adf_to_onprem_properties_typeProperties_host": {
+						"value": "[parameters('ls_ott_adf_to_onprem_properties_typeProperties_host')]"
+					},
+					"ls_ott_adf_to_onprem_properties_typeProperties_userId": {
+						"value": "[parameters('ls_ott_adf_to_onprem_properties_typeProperties_userId')]"
+					},
+					"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host": {
+						"value": "[parameters('ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host')]"
+					},
+					"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId": {
+						"value": "[parameters('ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
