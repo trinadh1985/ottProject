@@ -1,0 +1,60 @@
+{
+	"name": "ds_cicd_adf_adls2_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_cicd_adf_to_adls2",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "CICD-Process"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "2023-08-20 874532.732175.csv",
+				"folderPath": "IngestData/2023-08-20",
+				"fileSystem": "ott-project-input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Title",
+				"type": "String"
+			},
+			{
+				"name": "Genre",
+				"type": "String"
+			},
+			{
+				"name": "ReleaseDate",
+				"type": "String"
+			},
+			{
+				"name": "Runtime",
+				"type": "String"
+			},
+			{
+				"name": "IMDB Score",
+				"type": "String"
+			},
+			{
+				"name": "Language",
+				"type": "String"
+			},
+			{
+				"name": "Views",
+				"type": "String"
+			},
+			{
+				"name": "AddedDate",
+				"type": "String"
+			}
+		]
+	}
+}
