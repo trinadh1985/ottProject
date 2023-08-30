@@ -1,9 +1,0 @@
-{
-	"name": "pl_copy_pipeline_to_understand_cicd",
-	"properties": {
-		"folder": {
-			"name": "CICD-Process"
-		},
-		"annotations": []
-	}
-}
