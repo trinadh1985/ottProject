@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Ingest Ott Data",
+				"name": "Ingest Ott Dataa",
 				"type": "ExecutePipeline",
 				"dependsOn": [],
 				"userProperties": [],
@@ -20,7 +20,7 @@
 				"type": "ExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Ingest Ott Data",
+						"activity": "Ingest Ott Dataa",
 						"dependencyConditions": [
 							"Succeeded"
 						]
