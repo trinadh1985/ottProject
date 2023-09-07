@@ -1,5 +1,5 @@
 {
-	"name": "ds_untill_activity_source",
+	"name": "ds_untill_activity_copy_activity_sink",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_untill_activity_demo",
@@ -13,40 +13,13 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "*.csv",
-				"folderPath": "TestData",
-				"fileSystem": "ott-project-input"
+				"fileSystem": "ott-project-output"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
 			"firstRowAsHeader": false,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			},
-			{
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }

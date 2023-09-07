@@ -1,8 +1,8 @@
 {
-	"name": "ds_untill_activity_source",
+	"name": "ds_untill_activity_copy_activity_source",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_untill_activity_demo",
+			"referenceName": "getmetadata",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
@@ -13,7 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "*.csv",
 				"folderPath": "TestData",
 				"fileSystem": "ott-project-input"
 			},
