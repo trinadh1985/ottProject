@@ -55,6 +55,10 @@
 							],
 							"userProperties": [],
 							"typeProperties": {
+								"expression": {
+									"value": "@activity('Get Metadata1').output.exists",
+									"type": "Expression"
+								},
 								"ifFalseActivities": [
 									{
 										"name": "Wait1",
