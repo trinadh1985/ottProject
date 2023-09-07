@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DelimitedText2",
+						"referenceName": "ds_delete_activity_GetMetadata_source2",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -27,6 +27,7 @@
 					],
 					"storeSettings": {
 						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
 						"enablePartitionDiscovery": false
 					},
 					"formatSettings": {
@@ -66,7 +67,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"dataset": {
-									"referenceName": "DelimitedText1",
+									"referenceName": "ds_delete_activity_GetMetadata_source1",
 									"type": "DatasetReference",
 									"parameters": {
 										"FileName": {
@@ -81,6 +82,7 @@
 								],
 								"storeSettings": {
 									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
 									"enablePartitionDiscovery": false
 								},
 								"formatSettings": {
@@ -131,7 +133,7 @@
 										"userProperties": [],
 										"typeProperties": {
 											"dataset": {
-												"referenceName": "DelimitedText1",
+												"referenceName": "ds_delete_activity_GetMetadata_source1",
 												"type": "DatasetReference",
 												"parameters": {
 													"FileName": {

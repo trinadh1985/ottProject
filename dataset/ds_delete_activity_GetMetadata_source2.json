@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText2",
+	"name": "ds_delete_activity_GetMetadata_source2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "getmetadata",
