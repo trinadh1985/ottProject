@@ -13,6 +13,28 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_ott_adf_to_sqlserver_sink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_ott_adf_to_sqlserver",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "ottProject"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "ottdata",
+					"table": "ott_transformed_data"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_ott_load_transformed_to_sqlserver')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -92,7 +114,9 @@
 				"annotations": [],
 				"lastPublishTime": "2023-08-22T21:46:54Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_ott_adf_to_sqlserver_sink')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pl_ott_onprem_to_adls2_ingest')]",

@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ott-adf-dev"
 		},
+		"getmetadata_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'getmetadata'"
+		},
 		"ls_cicd_adf_to_adls2_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_cicd_adf_to_adls2'"
@@ -28,6 +32,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_ott_adf_to_sqlserver'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=ottdata;User ID=sqladmin"
+		},
+		"getmetadata_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ottstoragedevenv.dfs.core.windows.net/"
 		},
 		"ls_cicd_adf_to_adls2_properties_typeProperties_url": {
 			"type": "string",
@@ -96,6 +104,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"getmetadata_accountKey": {
+						"value": "[parameters('getmetadata_accountKey')]"
+					},
 					"ls_cicd_adf_to_adls2_accountKey": {
 						"value": "[parameters('ls_cicd_adf_to_adls2_accountKey')]"
 					},
@@ -110,6 +121,9 @@
 					},
 					"ls_ott_adf_to_sqlserver_connectionString": {
 						"value": "[parameters('ls_ott_adf_to_sqlserver_connectionString')]"
+					},
+					"getmetadata_properties_typeProperties_url": {
+						"value": "[parameters('getmetadata_properties_typeProperties_url')]"
 					},
 					"ls_cicd_adf_to_adls2_properties_typeProperties_url": {
 						"value": "[parameters('ls_cicd_adf_to_adls2_properties_typeProperties_url')]"
