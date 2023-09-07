@@ -1,0 +1,9 @@
+{
+	"name": "ott-adf-dev",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6e0ebef8-7260-4c70-95e5-966a2c4a7e5d",
+		"tenantId": "f5b80f3c-ecad-4a3b-9f7e-b544f31328a4"
+	}
+}

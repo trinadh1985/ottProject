@@ -1,0 +1,52 @@
+{
+	"name": "ds_delete_activity_GetMetadata_source2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "getmetadata",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "CICD-Process"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "TestData",
+				"fileSystem": "ott-project-input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

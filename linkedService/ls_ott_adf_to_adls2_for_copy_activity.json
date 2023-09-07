@@ -1,0 +1,12 @@
+{
+	"name": "ls_ott_adf_to_adls2_for_copy_activity",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobFS",
+		"typeProperties": {
+			"url": "https://ottstoragedev.dfs.core.windows.net/",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDAyMDNCQTI3LTg2OEQtNDQ5OC1CQzE5LTIzMEQ5MkNFQTRFQV9lMjQ5OGM1Yi0xYjU4LTRhN2YtOTJhYi01MjA1ZWU4ZWMzZTMiDQp9"
+		}
+	}
+}

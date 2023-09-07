@@ -1,0 +1,13 @@
+{
+	"name": "ls_ott_adf_to_connect_synapse",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSynapseArtifacts",
+		"typeProperties": {
+			"endpoint": "https://ott-synapse-dev.dev.azuresynapse.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/c221136e-27c0-41b1-8b6f-5e6a89a45d5d/resourceGroups/rg-ott-dev/providers/Microsoft.Synapse/workspaces/ott-synapse-dev"
+		}
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"name": "ott-self-IR",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"name": "ls_ott_adf_to_synapse_for_spark_notebook",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSynapseArtifacts",
+		"typeProperties": {
+			"endpoint": "https://ott-synapse-dev.dev.azuresynapse.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/da108ca3-f561-4f5d-b806-550e99df7366/resourceGroups/rg-dev/providers/Microsoft.Synapse/workspaces/ott-synapse-dev"
+		}
+	}
+}
