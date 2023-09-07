@@ -1,0 +1,51 @@
+{
+	"name": "ds_untill_activity_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_untill_activity_demo",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Activities_Practice"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "TestData",
+				"fileSystem": "ott-project-input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			},
+			{
+				"type": "String"
+			}
+		]
+	}
+}
