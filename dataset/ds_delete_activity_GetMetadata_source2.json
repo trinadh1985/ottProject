@@ -5,6 +5,9 @@
 			"referenceName": "getmetadata",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "CICD-Process"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
