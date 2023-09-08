@@ -19,7 +19,7 @@
 					"storedProcedureParameters": {
 						"ModifiedDate": {
 							"value": {
-								"value": "@utcnow()",
+								"value": "@formatDateTime(utcnow(),'yyyy-MM-dd')",
 								"type": "Expression"
 							},
 							"type": "DateTime"
