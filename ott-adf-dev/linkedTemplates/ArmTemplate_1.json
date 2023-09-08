@@ -39,6 +39,60 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_untill_activity_copy_activity_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "getmetadata",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Activities_Practice"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "TestData",
+						"fileSystem": "ott-project-input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_untill_activity_source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -521,7 +575,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_untill_activity_source')]"
+				"[concat(variables('factoryId'), '/datasets/ds_untill_activity_source')]",
+				"[concat(variables('factoryId'), '/datasets/ds_untill_activity_copy_activity_source')]"
 			]
 		},
 		{
@@ -789,16 +844,16 @@
 						"typeProperties": {
 							"storedProcedureName": "[[dbo].[SPUpdateLoadInfo]",
 							"storedProcedureParameters": {
-								"TableName": {
-									"value": "'tblControl'",
-									"type": "String"
-								},
 								"ModifiedDate": {
 									"value": {
-										"value": "@utcnow()",
+										"value": "@{activity('Lookup for Latest Modified Date').output.firstRow.Last_m}",
 										"type": "Expression"
 									},
-									"type": "Datetime"
+									"type": "DateTime"
+								},
+								"TableName": {
+									"value": "'tbluser'",
+									"type": "String"
 								}
 							}
 						},
