@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "pl_fullload_pipeline_SCD1",
 	"properties": {
 		"activities": [
 			{
