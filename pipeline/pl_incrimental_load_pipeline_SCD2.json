@@ -17,7 +17,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select max(Last_m)  FROM [tbluser];",
+						"sqlReaderQuery": "Select max([Last_m]) as Last_m\nfrom tbluser",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
