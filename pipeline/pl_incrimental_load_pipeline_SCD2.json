@@ -1,0 +1,37 @@
+{
+	"name": "pl_incrimental_load_pipeline_SCD2",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup Last Run Date",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select max(Last_m)  FROM [tbluser];",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "ds_fullload_pipeline_source",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"folder": {
+			"name": "adf_pipelines_and_practice"
+		},
+		"annotations": []
+	}
+}
