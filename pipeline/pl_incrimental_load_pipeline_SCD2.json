@@ -140,7 +140,7 @@
 							"value": "'tblControl'",
 							"type": "String"
 						},
-						"Date": {
+						"ModifiedDate": {
 							"value": {
 								"value": "@utcnow()",
 								"type": "Expression"
