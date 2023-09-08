@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Lookup Last Run Date",
+				"name": "Look LastRunDate On Control Table",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"name": "Lookup for New Rows after Last Run",
+				"name": "Lookup for Latest Modified Date",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
