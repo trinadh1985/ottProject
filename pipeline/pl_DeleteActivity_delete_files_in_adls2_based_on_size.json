@@ -1,5 +1,5 @@
 {
-	"name": "pl_delete_files_in_adls2_based_on_size",
+	"name": "pl_DeleteActivity_delete_files_in_adls2_based_on_size",
 	"properties": {
 		"activities": [
 			{
@@ -158,7 +158,7 @@
 			}
 		],
 		"folder": {
-			"name": "CICD-Process"
+			"name": "activities_practice"
 		},
 		"annotations": []
 	}

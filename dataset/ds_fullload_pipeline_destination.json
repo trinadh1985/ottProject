@@ -1,0 +1,19 @@
+{
+	"name": "ds_fullload_pipeline_destination",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_full_dataload_pipeline_destination",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "adf_pipelines_practice"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "userData"
+		}
+	}
+}

@@ -1,14 +1,9 @@
 {
-	"name": "ds_delete_activity_GetMetadata_source1",
+	"name": "ds_untill_activity_source",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "getmetadata",
+			"referenceName": "ls_untill_activity_demo",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"FileName": {
-				"type": "string"
-			}
 		},
 		"folder": {
 			"name": "Activities_Practice"
@@ -18,10 +13,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": {
-					"value": "@dataset().FileName",
-					"type": "Expression"
-				},
 				"folderPath": "TestData",
 				"fileSystem": "ott-project-input"
 			},
@@ -32,35 +23,27 @@
 		},
 		"schema": [
 			{
-				"name": "Title",
 				"type": "String"
 			},
 			{
-				"name": "Genre",
 				"type": "String"
 			},
 			{
-				"name": "ReleaseDate",
 				"type": "String"
 			},
 			{
-				"name": "Runtime",
 				"type": "String"
 			},
 			{
-				"name": "IMDB Score",
 				"type": "String"
 			},
 			{
-				"name": "Language",
 				"type": "String"
 			},
 			{
-				"name": "Views",
 				"type": "String"
 			},
 			{
-				"name": "AddedDate",
 				"type": "String"
 			}
 		]

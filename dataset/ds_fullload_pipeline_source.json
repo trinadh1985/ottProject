@@ -1,0 +1,19 @@
+{
+	"name": "ds_fullload_pipeline_source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_full_dataload_pipeline_source",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "adf_pipelines_practice"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "tbluser"
+		}
+	}
+}

@@ -1,0 +1,25 @@
+{
+	"name": "ds_untill_activity_copy_activity_sink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_untill_activity_demo",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Activities_Practice"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "ott-project-output"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": false,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
