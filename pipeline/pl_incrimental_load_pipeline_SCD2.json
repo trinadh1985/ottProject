@@ -17,7 +17,33 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "Select max([Last_m]) as Last_m\nfrom tbluser",
+						"sqlReaderQuery": "SELECT  [LastLoadDate] FROM [tblControl];",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "ds_fullload_pipeline_source",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Lookup for New Rows after Last Run",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT max([Last_m]) as Last_m  FROM [tbluser];",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
