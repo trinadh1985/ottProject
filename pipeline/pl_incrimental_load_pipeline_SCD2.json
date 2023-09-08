@@ -140,7 +140,7 @@
 					"storedProcedureName": "[dbo].[SPUpdateLoadInfo]",
 					"storedProcedureParameters": {
 						"ModifiedDate": {
-							"value": "@activity('Lookup for Latest Modified Date').output.firstRow.Last_m",
+							"value": "@{activity('Lookup for Latest Modified Date').output.firstRow.Last_m}",
 							"type": "DateTime"
 						},
 						"TableName": {
