@@ -14,6 +14,12 @@
 		"ls_cicd_adf_to_sqlserver_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=AdventureWorksLT;User ID=sqladmin"
 		},
+		"ls_full_dataload_pipeline_destination_connectionString": {
+			"value": ""
+		},
+		"ls_full_dataload_pipeline_source_connectionString": {
+			"value": ""
+		},
 		"ls_ott_adf_to_adls2_accountKey": {
 			"value": ""
 		},
@@ -22,6 +28,9 @@
 		},
 		"ls_ott_adf_to_sqlserver_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=ottdata;User ID=sqladmin"
+		},
+		"ls_untill_activity_demo_accountKey": {
+			"value": ""
 		},
 		"getmetadata_properties_typeProperties_url": {
 			"value": "https://ottstoragedevenv.dfs.core.windows.net/"
@@ -55,6 +64,9 @@
 		},
 		"ls_ott_adf_to_synapse_for_spark_notebook_properties_typeProperties_endpoint": {
 			"value": "https://ott-synapse-dev.dev.azuresynapse.net"
+		},
+		"ls_untill_activity_demo_properties_typeProperties_url": {
+			"value": "https://ottstoragedevenv.dfs.core.windows.net/"
 		}
 	}
 }

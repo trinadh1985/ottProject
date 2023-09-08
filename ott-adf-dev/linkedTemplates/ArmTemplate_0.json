@@ -15,6 +15,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_cicd_adf_to_adls2'"
 		},
+		"ls_full_dataload_pipeline_destination_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_full_dataload_pipeline_destination'"
+		},
+		"ls_full_dataload_pipeline_source_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_full_dataload_pipeline_source'"
+		},
 		"ls_ott_adf_to_adls2_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_ott_adf_to_adls2'"
@@ -23,15 +31,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_ott_adf_to_adls2_for_copy_activity'"
 		},
-		"ls_cicd_adf_to_sqlserver_connectionString": {
+		"ls_untill_activity_demo_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_cicd_adf_to_sqlserver'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=AdventureWorksLT;User ID=sqladmin"
-		},
-		"ls_ott_adf_to_sqlserver_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ls_ott_adf_to_sqlserver'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=ottdata;User ID=sqladmin"
+			"metadata": "Secure string for 'accountKey' of 'ls_untill_activity_demo'"
 		},
 		"getmetadata_properties_typeProperties_url": {
 			"type": "string",
@@ -61,21 +63,9 @@
 			"type": "string",
 			"defaultValue": "https://ott-synapse-dev.dev.azuresynapse.net"
 		},
-		"ls_ott_adf_to_onprem_properties_typeProperties_host": {
+		"ls_untill_activity_demo_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "C:\\Users\\3nadh\\Desktop\\Azure\\Azure End to End Projects\\Project3_OTT_Project\\OTTData"
-		},
-		"ls_ott_adf_to_onprem_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "3nadh"
-		},
-		"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "C:\\Users\\3nadh\\Desktop\\Azure\\Azure End to End Projects\\Project3_OTT_Project\\Host"
-		},
-		"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId": {
-			"type": "string",
-			"defaultValue": "3nadh"
+			"defaultValue": "https://ottstoragedevenv.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -112,6 +102,32 @@
 						"type": "SecureString",
 						"value": "[parameters('ls_cicd_adf_to_adls2_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_full_dataload_pipeline_destination')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('ls_full_dataload_pipeline_destination_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_full_dataload_pipeline_source')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('ls_full_dataload_pipeline_source_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -189,6 +205,23 @@
 					"endpoint": "[parameters('ls_ott_adf_to_synapse_for_spark_notebook_properties_typeProperties_endpoint')]",
 					"authentication": "MSI",
 					"workspaceResourceId": "/subscriptions/da108ca3-f561-4f5d-b806-550e99df7366/resourceGroups/rg-dev/providers/Microsoft.Synapse/workspaces/ott-synapse-dev"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_untill_activity_demo')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ls_untill_activity_demo_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ls_untill_activity_demo_accountKey')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -281,7 +314,7 @@
 					}
 				},
 				"folder": {
-					"name": "CICD-Process"
+					"name": "Activities_Practice"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -349,7 +382,7 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "CICD-Process"
+					"name": "Activities_Practice"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -393,6 +426,54 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/getmetadata')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_fullload_pipeline_destination')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_full_dataload_pipeline_destination",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "adf_pipelines_practice"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "userData"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_full_dataload_pipeline_destination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_fullload_pipeline_source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_full_dataload_pipeline_source",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "adf_pipelines_practice"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "tbluser"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_full_dataload_pipeline_source')]"
 			]
 		},
 		{
@@ -507,350 +588,89 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ls_cicd_adf_to_sqlserver')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_cicd_adf_to_sqlserver_connectionString')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_ott_adf_access_to_keyvault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "azure-sqlserver-pwd"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_ott_adf_access_to_keyvault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_ott_adf_to_onprem')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('ls_ott_adf_to_onprem_properties_typeProperties_host')]",
-					"userId": "[parameters('ls_ott_adf_to_onprem_properties_typeProperties_userId')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_ott_adf_access_to_keyvault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "onprem-vm-pwd"
-					}
-				},
-				"connectVia": {
-					"referenceName": "ott-self-IR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/ott-self-IR')]",
-				"[concat(variables('factoryId'), '/linkedServices/ls_ott_adf_access_to_keyvault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_ott_adf_to_onprem_for_copy_activity')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "FileServer",
-				"typeProperties": {
-					"host": "[parameters('ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host')]",
-					"userId": "[parameters('ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_ott_adf_access_to_keyvault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "ott-onprem-vm-password"
-					}
-				},
-				"connectVia": {
-					"referenceName": "ott-self-IR",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/ott-self-IR')]",
-				"[concat(variables('factoryId'), '/linkedServices/ls_ott_adf_access_to_keyvault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ls_ott_adf_to_sqlserver')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('ls_ott_adf_to_sqlserver_connectionString')]",
-					"password": {
-						"type": "AzureKeyVaultSecret",
-						"store": {
-							"referenceName": "ls_ott_adf_access_to_keyvault",
-							"type": "LinkedServiceReference"
-						},
-						"secretName": "azure-sqlserver-pwd"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_ott_adf_access_to_keyvault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pl_delete_files_in_adls2_based_on_size')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Get Metadata1",
-						"type": "GetMetadata",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataset": {
-								"referenceName": "ds_delete_activity_GetMetadata_source2",
-								"type": "DatasetReference",
-								"parameters": {}
-							},
-							"fieldList": [
-								"childItems",
-								"itemName",
-								"itemType",
-								"lastModified"
-							],
-							"storeSettings": {
-								"type": "AzureBlobFSReadSettings",
-								"recursive": true,
-								"enablePartitionDiscovery": false
-							},
-							"formatSettings": {
-								"type": "DelimitedTextReadSettings"
-							}
-						}
-					},
-					{
-						"name": "ForEach1",
-						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "Get Metadata1",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"userProperties": [],
-						"typeProperties": {
-							"items": {
-								"value": "@activity('Get Metadata1').output.childItems",
-								"type": "Expression"
-							},
-							"activities": [
-								{
-									"name": "Get Metadata2",
-									"type": "GetMetadata",
-									"dependsOn": [],
-									"policy": {
-										"timeout": "0.12:00:00",
-										"retry": 0,
-										"retryIntervalInSeconds": 30,
-										"secureOutput": false,
-										"secureInput": false
-									},
-									"userProperties": [],
-									"typeProperties": {
-										"dataset": {
-											"referenceName": "ds_delete_activity_GetMetadata_source1",
-											"type": "DatasetReference",
-											"parameters": {
-												"FileName": {
-													"value": "@item().name",
-													"type": "Expression"
-												}
-											}
-										},
-										"fieldList": [
-											"size",
-											"itemName"
-										],
-										"storeSettings": {
-											"type": "AzureBlobFSReadSettings",
-											"recursive": true,
-											"enablePartitionDiscovery": false
-										},
-										"formatSettings": {
-											"type": "DelimitedTextReadSettings"
-										}
-									}
-								},
-								{
-									"name": "If Condition1",
-									"type": "IfCondition",
-									"dependsOn": [
-										{
-											"activity": "Get Metadata2",
-											"dependencyConditions": [
-												"Succeeded"
-											]
-										}
-									],
-									"userProperties": [],
-									"typeProperties": {
-										"expression": {
-											"value": "@greater(activity('Get Metadata2').output.size,600)",
-											"type": "Expression"
-										},
-										"ifFalseActivities": [
-											{
-												"name": "Wait1",
-												"type": "Wait",
-												"dependsOn": [],
-												"userProperties": [],
-												"typeProperties": {
-													"waitTimeInSeconds": 1
-												}
-											}
-										],
-										"ifTrueActivities": [
-											{
-												"name": "Delete1",
-												"type": "Delete",
-												"dependsOn": [],
-												"policy": {
-													"timeout": "0.12:00:00",
-													"retry": 0,
-													"retryIntervalInSeconds": 30,
-													"secureOutput": false,
-													"secureInput": false
-												},
-												"userProperties": [],
-												"typeProperties": {
-													"dataset": {
-														"referenceName": "ds_delete_activity_GetMetadata_source1",
-														"type": "DatasetReference",
-														"parameters": {
-															"FileName": {
-																"value": "@activity('Get Metadata2').output.itemName",
-																"type": "Expression"
-															}
-														}
-													},
-													"enableLogging": false,
-													"storeSettings": {
-														"type": "AzureBlobFSReadSettings",
-														"recursive": true,
-														"enablePartitionDiscovery": false
-													}
-												}
-											}
-										]
-									}
-								}
-							]
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "CICD-Process"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_delete_activity_GetMetadata_source2')]",
-				"[concat(variables('factoryId'), '/datasets/ds_delete_activity_GetMetadata_source1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/ds_ott_adf_to_onprem_source')]",
+			"name": "[concat(parameters('factoryName'), '/ds_untill_activity_copy_activity_sink')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ls_ott_adf_to_onprem",
+					"referenceName": "ls_untill_activity_demo",
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "ottProject"
+					"name": "Activities_Practice"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
-						"type": "FileServerLocation"
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "ott-project-output"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
-					"firstRowAsHeader": true,
+					"firstRowAsHeader": false,
 					"quoteChar": "\""
 				},
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_ott_adf_to_onprem')]"
+				"[concat(variables('factoryId'), '/linkedServices/ls_untill_activity_demo')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_ott_adf_to_onprem_source_for_copyActivity')]",
+			"name": "[concat(parameters('factoryName'), '/ds_untill_activity_copy_activity_source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "ls_ott_adf_to_onprem",
+					"referenceName": "getmetadata",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"FileName": {
-						"type": "string"
-					}
-				},
 				"folder": {
-					"name": "ottProject"
+					"name": "Activities_Practice"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
-						"type": "FileServerLocation",
-						"fileName": {
-							"value": "@dataset().FileName",
-							"type": "Expression"
-						}
+						"type": "AzureBlobFSLocation",
+						"folderPath": "TestData",
+						"fileSystem": "ott-project-input"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
-					"firstRowAsHeader": true,
+					"firstRowAsHeader": false,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_ott_adf_to_onprem')]"
+				"[concat(variables('factoryId'), '/linkedServices/getmetadata')]"
 			]
 		}
 	]

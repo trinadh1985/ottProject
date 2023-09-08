@@ -20,6 +20,14 @@
 			"metadata": "Secure string for 'connectionString' of 'ls_cicd_adf_to_sqlserver'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=AdventureWorksLT;User ID=sqladmin"
 		},
+		"ls_full_dataload_pipeline_destination_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_full_dataload_pipeline_destination'"
+		},
+		"ls_full_dataload_pipeline_source_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_full_dataload_pipeline_source'"
+		},
 		"ls_ott_adf_to_adls2_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_ott_adf_to_adls2'"
@@ -32,6 +40,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_ott_adf_to_sqlserver'",
 			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=otts-sqlserver.database.windows.net;Initial Catalog=ottdata;User ID=sqladmin"
+		},
+		"ls_untill_activity_demo_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_untill_activity_demo'"
 		},
 		"getmetadata_properties_typeProperties_url": {
 			"type": "string",
@@ -77,6 +89,10 @@
 			"type": "string",
 			"defaultValue": "https://ott-synapse-dev.dev.azuresynapse.net"
 		},
+		"ls_untill_activity_demo_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ottstoragedevenv.dfs.core.windows.net/"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -110,17 +126,20 @@
 					"ls_cicd_adf_to_adls2_accountKey": {
 						"value": "[parameters('ls_cicd_adf_to_adls2_accountKey')]"
 					},
+					"ls_full_dataload_pipeline_destination_connectionString": {
+						"value": "[parameters('ls_full_dataload_pipeline_destination_connectionString')]"
+					},
+					"ls_full_dataload_pipeline_source_connectionString": {
+						"value": "[parameters('ls_full_dataload_pipeline_source_connectionString')]"
+					},
 					"ls_ott_adf_to_adls2_accountKey": {
 						"value": "[parameters('ls_ott_adf_to_adls2_accountKey')]"
 					},
 					"ls_ott_adf_to_adls2_for_copy_activity_accountKey": {
 						"value": "[parameters('ls_ott_adf_to_adls2_for_copy_activity_accountKey')]"
 					},
-					"ls_cicd_adf_to_sqlserver_connectionString": {
-						"value": "[parameters('ls_cicd_adf_to_sqlserver_connectionString')]"
-					},
-					"ls_ott_adf_to_sqlserver_connectionString": {
-						"value": "[parameters('ls_ott_adf_to_sqlserver_connectionString')]"
+					"ls_untill_activity_demo_accountKey": {
+						"value": "[parameters('ls_untill_activity_demo_accountKey')]"
 					},
 					"getmetadata_properties_typeProperties_url": {
 						"value": "[parameters('getmetadata_properties_typeProperties_url')]"
@@ -143,17 +162,8 @@
 					"ls_ott_adf_to_synapse_for_spark_notebook_properties_typeProperties_endpoint": {
 						"value": "[parameters('ls_ott_adf_to_synapse_for_spark_notebook_properties_typeProperties_endpoint')]"
 					},
-					"ls_ott_adf_to_onprem_properties_typeProperties_host": {
-						"value": "[parameters('ls_ott_adf_to_onprem_properties_typeProperties_host')]"
-					},
-					"ls_ott_adf_to_onprem_properties_typeProperties_userId": {
-						"value": "[parameters('ls_ott_adf_to_onprem_properties_typeProperties_userId')]"
-					},
-					"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host": {
-						"value": "[parameters('ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host')]"
-					},
-					"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId": {
-						"value": "[parameters('ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId')]"
+					"ls_untill_activity_demo_properties_typeProperties_url": {
+						"value": "[parameters('ls_untill_activity_demo_properties_typeProperties_url')]"
 					}
 				}
 			},
@@ -172,6 +182,24 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ls_cicd_adf_to_sqlserver_connectionString": {
+						"value": "[parameters('ls_cicd_adf_to_sqlserver_connectionString')]"
+					},
+					"ls_ott_adf_to_sqlserver_connectionString": {
+						"value": "[parameters('ls_ott_adf_to_sqlserver_connectionString')]"
+					},
+					"ls_ott_adf_to_onprem_properties_typeProperties_host": {
+						"value": "[parameters('ls_ott_adf_to_onprem_properties_typeProperties_host')]"
+					},
+					"ls_ott_adf_to_onprem_properties_typeProperties_userId": {
+						"value": "[parameters('ls_ott_adf_to_onprem_properties_typeProperties_userId')]"
+					},
+					"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host": {
+						"value": "[parameters('ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_host')]"
+					},
+					"ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId": {
+						"value": "[parameters('ls_ott_adf_to_onprem_for_copy_activity_properties_typeProperties_userId')]"
 					}
 				}
 			},
