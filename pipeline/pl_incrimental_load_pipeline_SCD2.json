@@ -82,7 +82,10 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "Select * from dbo.tbluser where [Last_m] > '@{activity('Look LastRunDate On Control Table').output.firstRow.LastLoadDate}'\nand [Last_m] <= '@{activity('Lookup for Latest Modified Date').output.firstRow.Last_m}'\n",
+						"sqlReaderQuery": {
+							"value": "Select * from dbo.tbluser where [Last_m] > '@{activity('Look LastRunDate On Control Table').output.firstRow.LastLoadDate}'\nand [Last_m] <= '@{activity('Lookup for Latest Modified Date').output.firstRow.Last_m}'\n",
+							"type": "Expression"
+						},
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -136,16 +139,13 @@
 				"typeProperties": {
 					"storedProcedureName": "[dbo].[SPUpdateLoadInfo]",
 					"storedProcedureParameters": {
-						"TableName": {
-							"value": "'tblControl'",
-							"type": "String"
-						},
 						"ModifiedDate": {
-							"value": {
-								"value": "@utcnow()",
-								"type": "Expression"
-							},
-							"type": "Datetime"
+							"value": "@activity('Lookup for Latest Modified Date').output.firstRow.Last_m",
+							"type": "DateTime"
+						},
+						"TableName": {
+							"value": "'tbluser'",
+							"type": "String"
 						}
 					}
 				},
