@@ -82,7 +82,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "Select * from dbo.tbluser where [Last_m] > @{activity('Look LastRunDate On Control Table').output.LastLoadDate}\nand [Last_m] <= @{activity('Lookup for Latest Modified Date').output.Last_m}\n",
+						"sqlReaderQuery": "Select * from dbo.tbluser where [Last_m] > '@{activity('Look LastRunDate On Control Table').output.value.LastLoadDate}'\nand [Last_m] <= '@{activity('Lookup for Latest Modified Date').output.value.Last_m}'\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
