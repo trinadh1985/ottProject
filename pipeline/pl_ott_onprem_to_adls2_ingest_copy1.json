@@ -75,78 +75,13 @@
 								],
 								"ifTrueActivities": [
 									{
-										"name": "Copy data From Onprem to ADLS2",
-										"type": "Copy",
+										"name": "Wait2",
+										"type": "Wait",
 										"dependsOn": [],
-										"policy": {
-											"timeout": "0.12:00:00",
-											"retry": 0,
-											"retryIntervalInSeconds": 30,
-											"secureOutput": false,
-											"secureInput": false
-										},
 										"userProperties": [],
 										"typeProperties": {
-											"source": {
-												"type": "DelimitedTextSource",
-												"storeSettings": {
-													"type": "FileServerReadSettings",
-													"recursive": true,
-													"enablePartitionDiscovery": false
-												},
-												"formatSettings": {
-													"type": "DelimitedTextReadSettings"
-												}
-											},
-											"sink": {
-												"type": "DelimitedTextSink",
-												"storeSettings": {
-													"type": "AzureBlobFSWriteSettings"
-												},
-												"formatSettings": {
-													"type": "DelimitedTextWriteSettings",
-													"quoteAllText": true,
-													"fileExtension": ".txt"
-												}
-											},
-											"enableStaging": false,
-											"translator": {
-												"type": "TabularTranslator",
-												"typeConversion": true,
-												"typeConversionSettings": {
-													"allowDataTruncation": true,
-													"treatBooleanAsNumber": false
-												}
-											}
-										},
-										"inputs": [
-											{
-												"referenceName": "ds_ott_adf_to_onprem_source_for_copyActivity",
-												"type": "DatasetReference",
-												"parameters": {
-													"FileName": {
-														"value": "@{item().name}",
-														"type": "Expression"
-													}
-												}
-											}
-										],
-										"outputs": [
-											{
-												"referenceName": "ds_ott_adf_to_adls2_sink_csv",
-												"type": "DatasetReference",
-												"parameters": {
-													"FileName": {
-														"value": "@{item().name}",
-														"type": "Expression"
-													},
-													"FolderName": {
-														"value": "@{item().name}",
-														"type": "Expression"
-													}
-												}
-											}
-										]
+											"waitTimeInSeconds": 5
+										}
 									}
 								]
 							}
