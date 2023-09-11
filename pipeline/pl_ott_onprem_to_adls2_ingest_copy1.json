@@ -59,7 +59,7 @@
 							"userProperties": [],
 							"typeProperties": {
 								"expression": {
-									"value": "@equals(substring(item().name,0,10),formatDateTime(utcNow(),'yyyy-MM-dd'))",
+									"value": "@equals(substring(item().name,0,10),'2023-09-12')",
 									"type": "Expression"
 								},
 								"ifFalseActivities": [
