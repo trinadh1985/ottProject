@@ -141,10 +141,10 @@
 					"storedProcedureParameters": {
 						"ModifiedDate": {
 							"value": {
-								"value": "@{activity('Get Max Modified Date from tbluser').output.firstRow.Last_m}",
+								"value": "@utcnow()",
 								"type": "Expression"
 							},
-							"type": "DateTime"
+							"type": "Datetime"
 						},
 						"TableName": {
 							"value": "'tbluser'",
