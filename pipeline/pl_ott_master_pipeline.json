@@ -56,11 +56,67 @@
 				}
 			},
 			{
-				"name": "Web2",
+				"name": "Web_Failure_Notification_Transformation",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
 						"activity": "Transform Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"DataFactory\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Web_Failure_Notification_Ingest",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Ingest Ott Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"DataFactory\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Web_Failure_Notification_Loading",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Load Data to SqlServer",
 						"dependencyConditions": [
 							"Failed"
 						]
