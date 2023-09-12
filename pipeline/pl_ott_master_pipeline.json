@@ -106,7 +106,7 @@
 					"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
 					"method": "POST",
 					"body": {
-						"value": "{\n\"DataFactory\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+						"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Failed\"\n\"DataFactory\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
 						"type": "Expression"
 					}
 				}
