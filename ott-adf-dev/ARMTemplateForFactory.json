@@ -99,59 +99,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Stored procedure1",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[SPUpdateLoadInfo]",
-							"storedProcedureParameters": {
-								"ModifiedDate": {
-									"value": {
-										"value": "@formatDateTime(utcnow(),'yyyy-MM-dd')",
-										"type": "Expression"
-									},
-									"type": "DateTime"
-								},
-								"TableName": {
-									"value": "'tbluser'",
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "ls_full_dataload_pipeline_source",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "adf_pipelines_and_practice"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ls_full_dataload_pipeline_source')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/pl_DeleteActivity_delete_files_in_adls2_based_on_size')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -501,7 +448,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy_FullDataLoad_Activity_SCD1",
+						"name": "Copy_FullDataLoad_Activity",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -649,7 +596,7 @@
 						}
 					},
 					{
-						"name": "Lookup for Latest Modified Date",
+						"name": "Get Max Modified Date from tbluser",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -686,7 +633,7 @@
 								]
 							},
 							{
-								"activity": "Lookup for Latest Modified Date",
+								"activity": "Get Max Modified Date from tbluser",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -704,7 +651,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "Select * from dbo.tbluser where [Last_m] > '@{activity('Look LastRunDate On Control Table').output.firstRow.LastLoadDate}'\nand [Last_m] <= '@{activity('Lookup for Latest Modified Date').output.firstRow.Last_m}'\n",
+									"value": "Select * from dbo.tbluser where Last_m > '@{activity('Look LastRunDate On Control Table').output.firstRow.LastLoadDate}'\nand Last_m <= '@{activity('Get Max Modified Date from tbluser').output.firstRow.Last_m}'\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -764,10 +711,10 @@
 							"storedProcedureParameters": {
 								"ModifiedDate": {
 									"value": {
-										"value": "@{activity('Lookup for Latest Modified Date').output.firstRow.Last_m}",
+										"value": "@utcnow()",
 										"type": "Expression"
 									},
-									"type": "DateTime"
+									"type": "Datetime"
 								},
 								"TableName": {
 									"value": "'tbluser'",
@@ -1005,6 +952,122 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "Web_Failure_Notification_Transformation",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Transform Data",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Failed\"\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Web_Failure_Notification_Ingest",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Ingest Ott Data",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Failed\"\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Web_Failure_Notification_Loading",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Load Data to SqlServer",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Failed\"\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "Web_Success_Notification_Loading_copy1",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Load Data to SqlServer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-85.eastus.logic.azure.com:443/workflows/37a32bf7554245f9a98a26975d82f0b1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fZYKPmTsc2P6XLotsf22P3RNYsJ-TDyEhcDU84nfn0g",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Successfull\",\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"policy": {
@@ -1197,6 +1260,59 @@
 				"[concat(variables('factoryId'), '/datasets/ds_ott_adf_to_onprem_source')]",
 				"[concat(variables('factoryId'), '/datasets/ds_ott_adf_to_onprem_source_for_copyActivity')]",
 				"[concat(variables('factoryId'), '/datasets/ds_ott_adf_to_adls2_sink_csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/test')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Stored procedure1",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[SPUpdateLoadInfo]",
+							"storedProcedureParameters": {
+								"ModifiedDate": {
+									"value": {
+										"value": "@utcnow()",
+										"type": "Expression"
+									},
+									"type": "DateTime"
+								},
+								"TableName": {
+									"value": "'tbluser'",
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ls_full_dataload_pipeline_source",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "adf_pipelines_and_practice"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_full_dataload_pipeline_source')]"
 			]
 		},
 		{
