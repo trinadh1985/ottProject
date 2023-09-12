@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "test",
 	"properties": {
 		"activities": [
 			{
@@ -19,7 +19,7 @@
 					"storedProcedureParameters": {
 						"ModifiedDate": {
 							"value": {
-								"value": "@formatDateTime(utcnow(),'yyyy-MM-dd')",
+								"value": "@utcnow()",
 								"type": "Expression"
 							},
 							"type": "DateTime"

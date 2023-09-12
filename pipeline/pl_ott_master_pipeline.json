@@ -54,6 +54,118 @@
 					},
 					"waitOnCompletion": true
 				}
+			},
+			{
+				"name": "Web_Failure_Notification_Transformation",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Transform Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Failed\"\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Web_Failure_Notification_Ingest",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Ingest Ott Data",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Failed\"\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Web_Failure_Notification_Loading",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Load Data to SqlServer",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-27.centralus.logic.azure.com:443/workflows/7f3f0539d46c4ce6a68de0fec910b251/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=B1KkE17rwjDDaTudqWSLApT7vfNXGCJz8cRE-E0x4V0",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Failed\"\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Web_Success_Notification_Loading_copy1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Load Data to SqlServer",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-85.eastus.logic.azure.com:443/workflows/37a32bf7554245f9a98a26975d82f0b1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fZYKPmTsc2P6XLotsf22P3RNYsJ-TDyEhcDU84nfn0g",
+					"method": "POST",
+					"body": {
+						"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Successfull\"\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+						"type": "Expression"
+					}
+				}
 			}
 		],
 		"folder": {

@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_FullDataLoad_Activity_SCD1",
+				"name": "Copy_FullDataLoad_Activity",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {

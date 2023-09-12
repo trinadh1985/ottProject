@@ -29,7 +29,7 @@
 				}
 			},
 			{
-				"name": "Lookup for Latest Modified Date",
+				"name": "Get Max Modified Date from tbluser",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -65,7 +65,7 @@
 						]
 					},
 					{
-						"activity": "Lookup for Latest Modified Date",
+						"activity": "Get Max Modified Date from tbluser",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -83,7 +83,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "Select * from dbo.tbluser where [Last_m] > '@{activity('Look LastRunDate On Control Table').output.firstRow.LastLoadDate}'\nand [Last_m] <= '@{activity('Lookup for Latest Modified Date').output.firstRow.Last_m}'\n",
+							"value": "Select * from dbo.tbluser where Last_m > '@{activity('Look LastRunDate On Control Table').output.firstRow.LastLoadDate}'\nand Last_m <= '@{activity('Get Max Modified Date from tbluser').output.firstRow.Last_m}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -141,10 +141,10 @@
 					"storedProcedureParameters": {
 						"ModifiedDate": {
 							"value": {
-								"value": "@{activity('Lookup for Latest Modified Date').output.firstRow.Last_m}",
+								"value": "@utcnow()",
 								"type": "Expression"
 							},
-							"type": "DateTime"
+							"type": "Datetime"
 						},
 						"TableName": {
 							"value": "'tbluser'",
