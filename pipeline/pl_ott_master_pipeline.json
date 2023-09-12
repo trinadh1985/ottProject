@@ -162,7 +162,7 @@
 					"url": "https://prod-85.eastus.logic.azure.com:443/workflows/37a32bf7554245f9a98a26975d82f0b1/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=fZYKPmTsc2P6XLotsf22P3RNYsJ-TDyEhcDU84nfn0g",
 					"method": "POST",
 					"body": {
-						"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Successfull\"\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
+						"value": "{\n\"Title\": \"The OttProject Scheduled Pipleline is Successfull\",\n\"Data Factory Name\":\"@{pipeline().DataFactory}\",\n\"Pipeline Name\":\"@{pipeline().Pipeline}\",\n\"RunID\":\"@{pipeline().RunId}\"\n}",
 						"type": "Expression"
 					}
 				}
